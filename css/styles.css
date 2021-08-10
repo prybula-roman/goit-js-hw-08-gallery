@@ -32,9 +32,12 @@ body {
   grid-auto-rows: 240px;
   grid-gap: 12px;
   padding: 0;
-  list-style: none;
+  list-style: circle;
   margin-left: auto;
   margin-right: auto;
+
+  outline: 1px solid #666;
+  height: 20px;
 }
 
 .gallery__item {
@@ -77,6 +80,8 @@ body {
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--animation-duration) var(--timing-function);
+
+  outline: #212121 1px;
 }
 
 .lightbox.is-open {
