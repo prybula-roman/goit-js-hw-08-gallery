@@ -63,43 +63,61 @@ const galleryItems = [
     description: 'Lighthouse Coast Sea',
   },
 ];
+
 const galery = document.querySelector('.gallery');
 const modal = document.querySelector('.lightbox');
 
 let rezStr = '';
-for (let i = 0; i != galleryItems.length; i++) {
-  rezStr += `<li class=\"galleryItem"\> <img  src=\"${galleryItems[i].preview}\" alt=\"${galleryItems[i].description}\"> </li>`;
-}
+galleryItems.forEach(elem => {
+  rezStr += `<li class=\"galleryItem\" > <img  src=\"${elem.preview}\" alt=\"${elem.description}\" data-original=\"${elem.original}\"> </li>`;
+});
 
 galery.insertAdjacentHTML('afterbegin', rezStr);
-const galItem = document.querySelectorAll('.galleryItem');
 galery.style.height = 'auto';
 
-//console.dir(galery);
+const galItem = document.querySelectorAll('.galleryItem');
 galItem.forEach(elem => {
-  // console.dir(elem);
   elem.style.overflow = 'hidden';
 });
 
-const clickedItem = () => {
-  console.log(e.target);
-};
+const bigImg = document.querySelector('.lightbox__image');
 
 const clickListener = e => {
-  //console.log('clickListener');
-  //console.dir(e.target);
   e.stopPropagation();
-  console.dir(modal);
   modal.classList.add('is-open');
+  //  console.log('e.target=', e.target);
+  // console.log('e.currentTarget=', e.currentTarget);
+  if (e.target.nodeName === 'IMG') {
+    console.log('Это картинка');
+    console.log(e.target.dataset.original);
+    console.log(`e.target.alt=${e.target.alt}`);
+    bigImg.src = e.target.dataset.original;
+    bigImg.alt = e.target.alt;
+
+    document.addEventListener('keydown', e => {
+      console.log(e.key);
+      switch (e.key) {
+        case '':
+          break;
+        case '':
+          break;
+        default:
+          break;
+      }
+    });
+  }
 };
 galery.addEventListener('click', clickListener);
 
-const butClose = document.querySelector('.lightbox__button');
-console.dir(butClose);
-
 const closeModal = e => {
-  console.log(e.target);
+  console.log('e.target=', e.target);
+  console.log('e.currentTarget=', e.currentTarget);
+  bigImg.src = '';
+  bigImg.alt = '';
   modal.classList.remove('is-open');
 };
-
+const butClose = document.querySelector('.lightbox__button');
 butClose.addEventListener('click', closeModal);
+
+const overlay = document.querySelector('.lightbox__overlay');
+overlay.addEventListener('click', closeModal);
