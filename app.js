@@ -78,6 +78,7 @@ galery.style.height = 'auto';
 const galItem = document.querySelectorAll('.galleryItem');
 galItem.forEach(elem => {
   elem.style.overflow = 'hidden';
+  //console.dir(elem);
 });
 
 const bigImg = document.querySelector('.lightbox__image');
@@ -85,21 +86,30 @@ const bigImg = document.querySelector('.lightbox__image');
 const clickListener = e => {
   e.stopPropagation();
   modal.classList.add('is-open');
-  //  console.log('e.target=', e.target);
-  // console.log('e.currentTarget=', e.currentTarget);
   if (e.target.nodeName === 'IMG') {
-    console.log('Это картинка');
-    console.log(e.target.dataset.original);
-    console.log(`e.target.alt=${e.target.alt}`);
     bigImg.src = e.target.dataset.original;
     bigImg.alt = e.target.alt;
 
+    //const imgArr = document.querySelectorAll('img');
+    const imgArr = document.('img');
+    console.dir(imgArr);
+    imgArr.forEach(elem => console.log(elem.key, ' : ', elem.value));
+
     document.addEventListener('keydown', e => {
-      console.log(e.key);
+      // console.log(e.key);
+
       switch (e.key) {
-        case '':
+        case 'ArrowRight':
+          console.log('Нажата кнопка ->');
+          indx++;
+          bigImg.src = imgArr[indx].original;
+          bigImg.alt = imgArr[indx].description;
           break;
-        case '':
+        case 'ArrowLeft':
+          console.log('Нажата кнопка <-');
+          indx--;
+          bigImg.src = imgArr[indx].original;
+          bigImg.alt = imgArr[indx].description;
           break;
         default:
           break;
