@@ -78,38 +78,37 @@ galery.style.height = 'auto';
 const galItem = document.querySelectorAll('.galleryItem');
 galItem.forEach(elem => {
   elem.style.overflow = 'hidden';
-  //console.dir(elem);
 });
 
 const bigImg = document.querySelector('.lightbox__image');
-
 const clickListener = e => {
   e.stopPropagation();
   modal.classList.add('is-open');
   if (e.target.nodeName === 'IMG') {
     bigImg.src = e.target.dataset.original;
     bigImg.alt = e.target.alt;
-
-    //const imgArr = document.querySelectorAll('img');
-    const imgArr = document.('img');
-    console.dir(imgArr);
-    imgArr.forEach(elem => console.log(elem.key, ' : ', elem.value));
-
+    const images= galery.querySelectorAll('img');
+    let i = 0;
+     galleryItems.forEach((elem) => {
+       if (e.target.alt === galleryItems[i].description) {
+         return i;
+       }
+        i++;
+    })
     document.addEventListener('keydown', e => {
-      // console.log(e.key);
-
       switch (e.key) {
         case 'ArrowRight':
-          console.log('Нажата кнопка ->');
-          indx++;
-          bigImg.src = imgArr[indx].original;
-          bigImg.alt = imgArr[indx].description;
+          i++;
+           if (i === galleryItems.length) i = 0;
+          bigImg.src = galleryItems[i].original;
+          bigImg.alt = galleryItems[i].description;
           break;
         case 'ArrowLeft':
           console.log('Нажата кнопка <-');
-          indx--;
-          bigImg.src = imgArr[indx].original;
-          bigImg.alt = imgArr[indx].description;
+          if (i === 0) i = galleryItems.length;
+          i--;
+          bigImg.src = galleryItems[i].original;
+          bigImg.alt = galleryItems[i].description;
           break;
         default:
           break;
@@ -120,8 +119,6 @@ const clickListener = e => {
 galery.addEventListener('click', clickListener);
 
 const closeModal = e => {
-  console.log('e.target=', e.target);
-  console.log('e.currentTarget=', e.currentTarget);
   bigImg.src = '';
   bigImg.alt = '';
   modal.classList.remove('is-open');
